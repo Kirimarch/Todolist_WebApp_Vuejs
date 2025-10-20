@@ -4,12 +4,11 @@
       :todos="todos"
       :pendingCount="pendingCount"
       :completedCount="completedCount"
-      @logout="logout"
+      @logout="confirmLogout"
     />
 
     <main class="main-content">
       <TodoAdd @addTodo="addTodo" />
-
       <TodoList
         :todos="filteredTodos"
         :activeFilter="activeFilter"
@@ -19,6 +18,36 @@
         @filterChange="activeFilter = $event"
       />
     </main>
+
+    <!-- Logout Confirm Modal -->
+    <div v-if="showLogoutConfirm" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      <div class="bg-gray-900 rounded-2xl p-6 w-96 shadow-xl border border-red-500/30 text-center">
+        <h3 class="text-xl font-semibold text-red-400 mb-3">⚠️ Confirm Logout</h3>
+        <p class="text-gray-300 mb-6">Are you sure you want to logout?</p>
+        <div class="flex justify-center space-x-4">
+          <button
+            @click="showLogoutConfirm = false"
+            class="px-5 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white"
+          >
+            Cancel
+          </button>
+          <button
+            @click="startLogoutCountdown"
+            class="px-5 py-2 bg-gradient-to-br from-red-500 to-pink-600 hover:opacity-90 rounded-lg text-white shadow-md"
+          >
+            Yes, Logout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logging Out Modal -->
+    <div v-if="showCountdown" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+      <div class="bg-gray-900 rounded-2xl p-6 w-96 shadow-xl border border-pink-500/30 text-center">
+        <h3 class="text-xl font-bold text-pink-400 mb-4">👋 Logging out...</h3>
+        <p class="text-gray-300">Redirecting in {{ countdown }} seconds</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,14 +65,17 @@ export default {
       todos: [],
       activeFilter: "All",
       filters: ["All", "Pending", "Completed"],
+      showLogoutConfirm: false,
+      showCountdown: false,
+      countdown: 3,
     };
   },
   computed: {
     pendingCount() {
-      return this.todos.filter(t => t.status === "pending").length;
+      return this.todos.filter((t) => t.status === "pending").length;
     },
     completedCount() {
-      return this.todos.filter(t => t.status === "completed").length;
+      return this.todos.filter((t) => t.status === "completed").length;
     },
     sortedTodos() {
       return [...this.todos].sort((a, b) => {
@@ -55,8 +87,10 @@ export default {
       });
     },
     filteredTodos() {
-      if (this.activeFilter === "Pending") return this.sortedTodos.filter(t => t.status === "pending");
-      if (this.activeFilter === "Completed") return this.sortedTodos.filter(t => t.status === "completed");
+      if (this.activeFilter === "Pending")
+        return this.sortedTodos.filter((t) => t.status === "pending");
+      if (this.activeFilter === "Completed")
+        return this.sortedTodos.filter((t) => t.status === "completed");
       return this.sortedTodos;
     },
   },
@@ -92,8 +126,31 @@ export default {
       });
       this.fetchTodos();
     },
+
+    // ✅ เรียกเมื่อกดปุ่ม Logout
+    confirmLogout() {
+      this.showLogoutConfirm = true;
+    },
+
+    // ✅ เมื่อยืนยัน logout
+    startLogoutCountdown() {
+      this.showLogoutConfirm = false;
+      this.showCountdown = true;
+      this.countdown = 2;
+
+      const interval = setInterval(() => {
+        this.countdown--;
+        if (this.countdown <= 0) {
+          clearInterval(interval);
+          this.logout();
+        }
+      }, 1000);
+    },
+
+    // ✅ logout จริง
     logout() {
       localStorage.removeItem("token");
+      this.showCountdown = false;
       this.$router.push("/login");
     },
   },
@@ -128,7 +185,7 @@ export default {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
-  scrollbar-color: #01f7ff #1f2937;
+  scrollbar-color: #ec4899 #1f2937;
   scrollbar-width: thin;
 }
 </style>
