@@ -47,7 +47,7 @@
 
 ### 1️⃣ ติดตั้ง Backend
 ```bash
-cd backend
+cd server
 npm install
 node server.js
 ```
@@ -59,7 +59,7 @@ node server.js
 
 ### 2️⃣ ติดตั้ง Frontend
 ```bash
-cd frontend
+cd src
 npm install
 npm run dev
 ```
