@@ -77,7 +77,7 @@
                rounded-2xl shadow-2xl p-8 max-w-sm w-full text-center animate-popup"
       >
         <h2 class="text-2xl font-bold mb-2 flex justify-center items-center gap-2">
-          🎉 {{ messageTitle }}
+           {{ messageTitle }}
         </h2>
         <p class="text-sm opacity-90 mb-5">{{ messageBody }}</p>
 
@@ -129,7 +129,7 @@ const handleRegister = async () => {
     messageTitle.value = "🎉 Registration Successful!";
     messageBody.value = "You will be redirected to the home page shortly.";
     showMessage.value = true;
-    countdown.value = 3;
+    countdown.value = 4;
 
     timer = setInterval(() => {
       countdown.value--;
