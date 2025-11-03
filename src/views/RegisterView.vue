@@ -2,7 +2,6 @@
   <div
     class="min-h-screen w-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-4 relative"
   >
-    <!-- 🏠 Home Icon -->
     <router-link
       to="/"
       class="absolute top-4 left-4 p-2 rounded-full bg-gray-800/70 text-white hover:bg-gray-700 transition"
@@ -10,7 +9,7 @@
       <Home class="w-6 h-6" />
     </router-link>
 
-    <!-- 📦 Register Form -->
+    <!-- Register Form -->
     <div
       class="w-full max-w-md bg-gray-900/80 backdrop-blur-xl rounded-2xl shadow-2xl p-8 transform transition-all hover:scale-[1.02]"
     >
@@ -68,7 +67,7 @@
       </p>
     </div>
 
-    <!-- 🎉 Modal -->
+    <!-- Modal -->
     <div
       v-if="showMessage"
       class="fixed inset-0 flex items-center justify-center bg-black/60 z-50"

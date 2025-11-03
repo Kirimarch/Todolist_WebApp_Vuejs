@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <!-- Logging Out Modal -->
+    <!-- Logging Out Mo -->
     <div v-if="showCountdown" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
       <div class="bg-gray-900 rounded-2xl p-6 w-96 shadow-xl border border-pink-500/30 text-center">
         <h3 class="text-xl font-bold text-pink-400 mb-4">👋 Logging out...</h3>
@@ -127,12 +127,12 @@ export default {
       this.fetchTodos();
     },
 
-    // ✅ เรียกเมื่อกดปุ่ม Logout
+    
     confirmLogout() {
       this.showLogoutConfirm = true;
     },
 
-    // ✅ เมื่อยืนยัน logout
+    
     startLogoutCountdown() {
       this.showLogoutConfirm = false;
       this.showCountdown = true;
@@ -147,7 +147,7 @@ export default {
       }, 1000);
     },
 
-    // ✅ logout จริง
+    
     logout() {
       localStorage.removeItem("token");
       this.showCountdown = false;

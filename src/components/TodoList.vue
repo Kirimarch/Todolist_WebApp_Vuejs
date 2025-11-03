@@ -150,7 +150,7 @@ export default {
 
         if (!response.ok) throw new Error("Failed to update todo");
 
-        // ✅ อัปเดตค่าใน local list ทันที โดยไม่ต้องรีเฟรช
+       
         const index = this.todos.findIndex(t => t.id === this.editData.id);
         if (index !== -1) {
           this.todos[index].name = this.editData.name;
@@ -159,7 +159,7 @@ export default {
 
         this.showEditPopup = false;
 
-        // แจ้ง parent ถ้าอยาก sync ต่อ
+        
         this.$emit("todoUpdated", this.editData);
 
       } catch (err) {
